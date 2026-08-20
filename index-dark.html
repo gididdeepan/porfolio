@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R.L. Deepan — Full Stack Developer & Vision Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --white: #0f1613;
+  --bg: #090c0b;
+  --surface: #0f1613;
+  --border: #1e2b26;
+  --border2: #2c3d36;
+  --accent: #39ff88;
+  --accent-light: #12271b;
+  --accent-dark: #6dffab;
+  --text: #e7f3ec;
+  --muted: #8ba39a;
+  --muted2: #56685f;
+  --success: #39ff88;
+  --tag-bg: #131c18;
+  --cyan: #4fd8ff;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background:
+    radial-gradient(ellipse 900px 500px at 85% -5%, rgba(57,255,136,0.07), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 0% 20%, rgba(79,216,255,0.05), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(9,12,11,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.4); }
+
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.25rem;
+  color: var(--text);
+}
+.nav-logo span { color: var(--accent); }
+
+.nav-links { display: flex; gap: 0; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500;
+  color: var(--muted); text-decoration: none;
+  padding: 0.4rem 1rem; border-radius: 6px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: var(--text); background: var(--tag-bg); }
+.nav-cta { background: var(--accent) !important; color: white !important; border-radius: 8px !important; }
+.nav-cta:hover { background: var(--accent-dark) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 80px 5% 60px;
+  background: var(--bg);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(57,255,136,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57,255,136,0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 800px 500px at 75% 30%, black, transparent 70%);
+  z-index: 0;
+}
+.hero::after {
+  content: '';
+  position: absolute; left: 0; top: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 12px 1px rgba(57,255,136,0.6);
+  animation: scanSweep 7s linear infinite;
+  z-index: 0; opacity: 0.7;
+}
+@keyframes scanSweep {
+  0% { top: 8%; opacity: 0; }
+  8% { opacity: 0.7; }
+  50% { top: 92%; opacity: 0.7; }
+  58% { opacity: 0; }
+  100% { top: 92%; opacity: 0; }
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--accent-light); color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em;
+  padding: 0.3rem 0.85rem; border-radius: 4px;
+  border: 1px solid var(--border2);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+.hero-badge .dot {
+  width: 6px; height: 6px; background: var(--success);
+  border-radius: 50%; animation: blink 2s ease-in-out infinite;
+  box-shadow: 0 0 6px 1px rgba(57,255,136,0.8);
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+.hero-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.03em; margin-bottom: 0.8rem;
+  color: var(--text);
+}
+.hero-name .blue { color: var(--accent); text-shadow: 0 0 24px rgba(57,255,136,0.35); }
+
+.hero-role {
+  font-size: 1rem; color: var(--muted);
+  font-weight: 400; margin-bottom: 1.5rem; line-height: 1.6;
+}
+.hero-role strong { color: var(--text); font-weight: 600; }
+
+.hero-desc {
+  font-size: 0.92rem; color: var(--muted);
+  line-height: 1.8; max-width: 480px; margin-bottom: 2.2rem;
+}
+
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.65rem 1.4rem; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 500;
+  text-decoration: none; transition: all 0.2s;
+  cursor: pointer; border: none;
+}
+.btn-primary { background: var(--accent); color: #06120a; font-weight: 600; }
+.btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 0 24px rgba(57,255,136,0.4); }
+.btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border2); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+.hero-meta { display: flex; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.hero-meta-num {
+  font-family: var(--mono);
+  font-size: 1.8rem; font-weight: 600; color: var(--text); line-height: 1;
+}
+.hero-meta-num span { color: var(--accent); }
+.hero-meta-label { font-size: 0.75rem; color: var(--muted2); margin-top: 0.2rem; }
+
+/* Hero card */
+.hero-card {
+  background: var(--surface); border-radius: 12px;
+  border: 1px solid var(--border2);
+  box-shadow: 0 0 0 1px rgba(57,255,136,0.05), 0 20px 60px rgba(0,0,0,0.5);
+  padding: 2rem; animation: floatCard 4s ease-in-out infinite alternate;
+  position: relative; z-index: 1;
+}
+@keyframes floatCard { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+
+.hero-card-header {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-avatar {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--accent), var(--cyan));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: #06120a;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+}
+.hero-card-name { font-size: 1rem; font-weight: 600; color: var(--text); }
+.hero-card-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; font-family: var(--mono); }
+.hero-card-detect {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--accent);
+  letter-spacing: 0.06em; margin-top: 0.35rem;
+}
+
+.hero-skill-list { display: flex; flex-direction: column; gap: 0.9rem; }
+.hero-skill-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.hero-skill-name { font-size: 0.8rem; color: var(--text); font-weight: 500; min-width: 120px; }
+.hero-skill-bar { flex: 1; height: 5px; background: var(--bg); border-radius: 10px; overflow: hidden; }
+.hero-skill-fill {
+  height: 100%; border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  animation: barGrow 1.2s 0.5s ease both;
+  transform-origin: left;
+  box-shadow: 0 0 8px rgba(57,255,136,0.5);
+}
+@keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.hero-skill-pct { font-size: 0.72rem; color: var(--muted2); min-width: 50px; text-align: right; font-family: var(--mono); }
+
+.hero-card-tags {
+  margin-top: 1.5rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.hero-card-tag {
+  font-size: 0.7rem; padding: 0.25rem 0.65rem;
+  background: var(--tag-bg); color: var(--muted);
+  border-radius: 4px; font-weight: 500;
+  border: 1px solid var(--border); font-family: var(--mono);
+}
+
+/* SECTIONS */
+.section { padding: 80px 5%; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-alt { background: #0c1210; }
+
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 500;
+  color: var(--accent); text-transform: uppercase;
+  letter-spacing: 0.12em; margin-bottom: 0.5rem;
+}
+.section-eyebrow::before { content: '// '; color: var(--muted2); }
+.section-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700; color: var(--text);
+  letter-spacing: -0.02em; margin-bottom: 0.6rem; line-height: 1.2;
+}
+.section-sub {
+  font-size: 0.9rem; color: var(--muted);
+  max-width: 500px; margin-bottom: 3rem; line-height: 1.7;
+}
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: start; }
+.about-text p { font-size: 0.92rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.1rem; }
+.about-text p strong { color: var(--text); font-weight: 600; }
+.about-highlight {
+  background: var(--accent-light); border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0; padding: 1.1rem 1.4rem;
+  margin: 1.5rem 0; font-size: 0.88rem; color: var(--accent-dark);
+  line-height: 1.7; font-weight: 500;
+}
+.about-spec-label { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted2); margin-bottom: 0.8rem; margin-top: 1.5rem; }
+.about-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.about-chip {
+  font-size: 0.78rem; padding: 0.3rem 0.8rem;
+  background: var(--tag-bg); color: var(--text);
+  border-radius: 6px; font-weight: 500;
+  border: 1px solid var(--border); transition: all 0.2s;
+}
+.about-chip:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+.about-cards { display: flex; flex-direction: column; gap: 1rem; }
+.about-info-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.2rem 1.4rem;
+  display: flex; gap: 1rem; align-items: flex-start; transition: all 0.2s;
+}
+.about-info-card:hover { border-color: var(--accent); background: var(--accent-light); }
+.about-info-icon {
+  width: 38px; height: 38px; background: var(--tag-bg); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0; border: 1px solid var(--border2);
+}
+.about-info-title { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 0.15rem; }
+.about-info-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+.skill-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.5rem; transition: all 0.25s;
+}
+.skill-card:hover { border-color: var(--accent); box-shadow: 0 0 24px rgba(57,255,136,0.12); transform: translateY(-2px); }
+.skill-card-icon { font-size: 1.6rem; margin-bottom: 0.8rem; filter: drop-shadow(0 0 6px rgba(57,255,136,0.3)); }
+.skill-card-title { font-family: var(--mono); font-size: 0.76rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.9rem; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.skill-tag { font-family: var(--mono); font-size: 0.71rem; padding: 0.22rem 0.6rem; background: var(--tag-bg); color: var(--muted); border-radius: 4px; font-weight: 400; border: 1px solid var(--border); }
+
+/* PROJECTS */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
+.project-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.6rem; transition: all 0.25s;
+  display: flex; flex-direction: column; position: relative;
+}
+.project-card::before,
+.project-card::after {
+  content: ''; position: absolute; width: 12px; height: 12px;
+  border: 2px solid var(--accent); opacity: 0; transition: opacity 0.25s, inset 0.25s;
+}
+.project-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.project-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+.project-card:hover { border-color: var(--border2); box-shadow: 0 8px 30px rgba(0,0,0,0.4); transform: translateY(-3px); }
+.project-card:hover::before,
+.project-card:hover::after { opacity: 1; }
+.project-card.featured { grid-column: span 2; background: linear-gradient(135deg, #101d16 0%, #0d1a14 100%); border-color: var(--border2); }
+.project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.project-icon { width: 44px; height: 44px; background: var(--accent-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+.project-badge { font-family: var(--mono); font-size: 0.66rem; font-weight: 500; padding: 0.22rem 0.65rem; border-radius: 4px; background: var(--accent-light); color: var(--accent); border: 1px solid rgba(57,255,136,0.25); }
+.project-badge.green { background: rgba(79,216,255,0.1); color: var(--cyan); border-color: rgba(79,216,255,0.25); }
+.project-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; line-height: 1.3; }
+.project-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 1.1rem; }
+.project-points { list-style: none; margin-bottom: 1.2rem; }
+.project-points li { font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0 0.2rem 1rem; position: relative; line-height: 1.5; }
+.project-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; }
+.project-techs { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; }
+.tech-tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.2rem 0.55rem; background: var(--tag-bg); color: var(--muted); border-radius: 4px; font-weight: 400; border: 1px solid var(--border); }
+
+/* EXPERIENCE */
+.exp-wrapper { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; align-items: start; }
+.exp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; }
+.exp-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.exp-logo { width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), var(--cyan)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #06120a; font-weight: 700; font-size: 1rem; flex-shrink: 0; font-family: var(--mono); }
+.exp-company { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); }
+.exp-role { font-size: 0.8rem; color: var(--accent); font-weight: 500; margin-top: 0.1rem; }
+.exp-date { margin-left: auto; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: var(--tag-bg); border: 1px solid var(--border2); padding: 0.2rem 0.65rem; border-radius: 4px; white-space: nowrap; }
+.exp-points { list-style: none; }
+.exp-points li { font-size: 0.84rem; color: var(--muted); padding: 0.55rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6; }
+.exp-points li:last-child { border-bottom: none; }
+.exp-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; box-shadow: 0 0 6px rgba(57,255,136,0.6); }
+
+.impact-grid { display: flex; flex-direction: column; gap: 1rem; }
+.impact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.3rem 1.5rem; display: flex; align-items: center; gap: 1.2rem; }
+.impact-num { font-family: var(--mono); font-size: 1.6rem; font-weight: 600; color: var(--accent); white-space: nowrap; }
+.impact-label { font-size: 0.82rem; color: var(--muted); line-height: 1.4; }
+.impact-label strong { color: var(--text); font-weight: 600; display: block; }
+.rare-box { background: var(--accent-light); border: 1px solid rgba(57,255,136,0.25); border-radius: 10px; padding: 1.3rem 1.5rem; }
+.rare-box-title { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.rare-box p { font-size: 0.82rem; color: #b6f5ce; line-height: 1.7; }
+
+/* ACHIEVEMENTS */
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+.ach-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.6rem; display: flex; gap: 1.1rem; align-items: flex-start; transition: all 0.25s; }
+.ach-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 0 24px rgba(57,255,136,0.12); }
+.ach-icon { width: 44px; height: 44px; background: var(--accent-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.ach-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+.ach-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+.contact-intro { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+.contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-link { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: all 0.2s; }
+.contact-link:hover { border-color: var(--accent); box-shadow: 0 0 20px rgba(57,255,136,0.1); transform: translateX(4px); }
+.contact-link-icon { width: 36px; height: 36px; background: var(--accent-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.contact-link-label { font-family: var(--mono); font-size: 0.66rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted2); }
+.contact-link-val { font-size: 0.84rem; font-weight: 500; color: var(--text); margin-top: 0.05rem; }
+.contact-form-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { margin-bottom: 1.1rem; }
+.form-label { display: block; font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--muted); margin-bottom: 0.45rem; }
+.form-input { width: 100%; padding: 0.65rem 0.9rem; border: 1.5px solid var(--border); border-radius: 6px; background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(57,255,136,0.12); }
+.form-input::placeholder { color: var(--muted2); }
+textarea.form-input { resize: vertical; min-height: 110px; }
+.form-submit { width: 100%; padding: 0.75rem; background: var(--accent); color: #06120a; border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.form-submit:hover { background: var(--accent-dark); box-shadow: 0 0 24px rgba(57,255,136,0.35); }
+
+/* FOOTER */
+footer { background: #070a09; border-top: 1px solid var(--border); color: var(--muted2); padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; }
+.footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+.footer-copy { font-family: var(--mono); font-size: 0.74rem; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 0.78rem; color: var(--muted2); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--accent); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .hero-inner, .about-grid, .exp-wrapper, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero::after { display: none; }
+  .project-card.featured { grid-column: span 1; }
+  nav { padding: 0 4%; }
+  .nav-links { display: none; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .form-row { grid-template-columns: 1fr; }
+}
+.hero-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.hero-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+/* viewfinder / detection-frame corners — signature element */
+.hero-avatar::before,
+.hero-avatar::after,
+.hero-avatar span.corner-tl,
+.hero-avatar span.corner-br {
+  content: ''; position: absolute; width: 16px; height: 16px;
+  border: 2px solid var(--accent);
+}
+.hero-avatar::before { top: -6px; left: -6px; border-right: none; border-bottom: none; }
+.hero-avatar::after { bottom: -6px; right: -6px; border-left: none; border-top: none; }
+.hero-avatar span.corner-tl { top: -6px; right: -6px; border-left: none; border-bottom: none; }
+.hero-avatar span.corner-br { bottom: -6px; left: -6px; border-right: none; border-top: none; }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-logo">R.L.<span>Deepan</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><span class="dot"></span> Open to Opportunities</div>
+      <h1 class="hero-name">R.L. <span class="blue">Deepan</span></h1>
+      <p class="hero-role"><strong>Full Stack Developer</strong> · Computer Vision Engineer · Industrial Automation</p>
+      <p class="hero-desc">Building scalable web applications and real-time industrial vision systems. I bridge the gap between software and the factory floor — where Python meets precision hardware.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="https://github.com/gididdeepan" target="_blank" class="btn btn-ghost">GitHub</a>
+        <a href="https://www.linkedin.com/in/deepan20" target="_blank" class="btn btn-ghost">LinkedIn</a>
+        <a href="assets/Deepan_Resume.pdf" class="btn btn-ghost" download>
+  Resume ↓
+</a>
+      </div>
+
+      <div class="hero-meta">
+        <div>
+          <div class="hero-meta-num">2.5<span>+</span></div>
+          <div class="hero-meta-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="hero-meta-num">10<span>+</span></div>
+          <div class="hero-meta-label">Vision Systems</div>
+        </div>
+        <div>
+          <div class="hero-meta-num">3<span>D</span></div>
+          <div class="hero-meta-label">Camera Expertise</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="hero-avatar">
+        <img src="assets/Deepan.jpeg" alt="Deepan">
+        <span class="corner-tl"></span><span class="corner-br"></span>
+      </div>
+        <div>
+          <div class="hero-card-name">R.L. Deepan</div>
+          <div class="hero-card-sub">Python Full Stack · Vision Engineer</div>
+          <div class="hero-card-detect">● DETECTED: developer · conf 0.99</div>
+        </div>
+      </div>
+      <div class="hero-skill-list">
+        <div class="hero-skill-row">
+          <span class="hero-skill-name">Python / Django</span>
+          <div class="hero-skill-bar"><div class="hero-skill-fill" style="width:90%"></div></div>
+          <span class="hero-skill-pct">Expert</span>
+        </div>
+        <div class="hero-skill-row">
+          <span class="hero-skill-name">OpenCV / NumPy</span>
+          <div class="hero-skill-bar"><div class="hero-skill-fill" style="width:88%"></div></div>
+          <span class="hero-skill-pct">Expert</span>
+        </div>
+        <div class="hero-skill-row">
+          <span class="hero-skill-name">SICK Cameras 3D</span>
+          <div class="hero-skill-bar"><div class="hero-skill-fill" style="width:85%"></div></div>
+          <span class="hero-skill-pct">Advanced</span>
+        </div>
+        <div class="hero-skill-row">
+          <span class="hero-skill-name">Flask / REST API</span>
+          <div class="hero-skill-bar"><div class="hero-skill-fill" style="width:82%"></div></div>
+          <span class="hero-skill-pct">Advanced</span>
+        </div>
+        <div class="hero-skill-row">
+          <span class="hero-skill-name">Git / GitHub</span>
+          <div class="hero-skill-bar"><div class="hero-skill-fill" style="width:75%"></div></div>
+          <span class="hero-skill-pct">Proficient</span>
+        </div>
+      </div>
+      <div class="hero-card-tags">
+        <span class="hero-card-tag">Python</span>
+        <span class="hero-card-tag">Django</span>
+        <span class="hero-card-tag">OpenCV</span>
+        <span class="hero-card-tag">SICK</span>
+        <span class="hero-card-tag">3D Vision</span>
+        <span class="hero-card-tag">REST API</span>
+       <!-- <span class="hero-card-tag">MySQL</span>-->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section-alt" id="about">
+  <div class="section-inner">
+    <div class="section-eyebrow">About Me</div>
+    <h2 class="section-heading">Developer at the Edge of<br>Software &amp; Hardware</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I am a <strong>Python Full Stack Developer</strong> with 2.5 years of experience building web applications and industrial automation solutions. What sets me apart is working at the intersection of software engineering and machine vision.</p>
+        <p>My work spans <strong>Python-based web development</strong> with Flask &amp; Django, <strong>real-time image processing</strong> with OpenCV &amp; NumPy, and industrial vision systems using <strong>SICK 2D/3D cameras</strong> on live production lines.</p>
+        <div class="about-highlight">I don't just write code — I build systems that see, measure, and decide in real-time on the factory floor. From depth analysis to defect detection, this is where engineering gets serious.</div>
+        <div class="about-spec-label">Core Expertise</div>
+        <div class="about-chips">
+          <span class="about-chip">Python</span><span class="about-chip">Django</span><span class="about-chip">Flask</span>
+          <span class="about-chip">OpenCV</span><span class="about-chip">NumPy</span><span class="about-chip">SICK Cameras</span>
+          <span class="about-chip">REST API</span><!--<span class="about-chip">MySQL</span>--><span class="about-chip">Git</span><span class="about-chip">OCR</span>
+        </div>
+      </div>
+      <div class="about-cards">
+        <div class="about-info-card"><div class="about-info-icon">🔬</div><div><div class="about-info-title">Depth Analysis</div><div class="about-info-desc">Real-time 3D point cloud processing for precision industrial measurement.</div></div></div>
+        <div class="about-info-card"><div class="about-info-icon">📐</div><div><div class="about-info-title">Measurement Systems</div><div class="about-info-desc">Width, height, and angle calculation from raw sensor data with millimeter accuracy.</div></div></div>
+        <div class="about-info-card"><div class="about-info-icon">⚡</div><div><div class="about-info-title">Real-Time Inspection</div><div class="about-info-desc">End-to-end pipelines from camera input to automated pass/fail output.</div></div></div>
+        <div class="about-info-card"><div class="about-info-icon">🌐</div><div><div class="about-info-title">Full Stack Web</div><div class="about-info-desc">REST APIs, dashboards, and data management backends in Django &amp; Flask.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-inner">
+    <div class="section-eyebrow">Skills &amp; Technologies</div>
+    <h2 class="section-heading">What I Work With</h2>
+    <p class="section-sub">A curated stack built around real-world industrial and web development challenges.</p>
+    <div class="skills-grid reveal">
+      <div class="skill-card"><div class="skill-card-icon">🖥️</div><div class="skill-card-title">Frontend</div><div class="skill-tags"><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">JavaScript</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">⚙️</div><div class="skill-card-title">Backend</div><div class="skill-tags"><span class="skill-tag">Python</span><span class="skill-tag">Django</span><span class="skill-tag">Flask</span><span class="skill-tag">REST API</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">👁️</div><div class="skill-card-title">Computer Vision</div><div class="skill-tags"><span class="skill-tag">OpenCV</span><span class="skill-tag">NumPy</span><span class="skill-tag">2D Processing</span><span class="skill-tag">3D Processing</span><span class="skill-tag">OCR</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📷</div><div class="skill-card-title">Industrial Hardware</div><div class="skill-tags"><span class="skill-tag">SICK Ruler 3D</span><span class="skill-tag">SICK PICO</span><span class="skill-tag">Depth Sensors</span></div></div>
+      <!--<div class="skill-card"><div class="skill-card-icon">🗄️</div><div class="skill-card-title">Database</div><div class="skill-tags"><span class="skill-tag">MySQL</span></div></div>-->
+      <div class="skill-card"><div class="skill-card-icon">🛠️</div><div class="skill-card-title">Tools</div><div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">vscode</span><span class="skill-tag">Inno Setup</span><span class="skill-tag">Hercules</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section section-alt" id="projects">
+  <div class="section-inner">
+    <div class="section-eyebrow">Projects</div>
+    <h2 class="section-heading">What I've Built</h2>
+    <p class="section-sub">Real-world systems deployed on live production lines and industrial environments.</p>
+    <div class="projects-grid">
+      <div class="project-card featured reveal">
+        <div class="project-top"><div class="project-icon">🔩</div><span class="project-badge">⭐ Featured</span></div>
+        <h3 class="project-title">Apollo Tire Splice Measurement System</h3>
+        <p class="project-desc">End-to-end real-time inspection system for measuring tire splice depth with millimeter-level precision using 3D depth data. Deployed on Apollo's live production line.</p>
+        <ul class="project-points">
+          <li>Real-time depth measurement from 3D data</li>
+          <li>Width &amp; height calculation from SICK Ruler sensor output</li>
+          <li>Automated data logging and failure detection alerts</li>
+          <li>Production-line speed — zero downtime tolerance</li>
+        </ul>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">NumPy</span><span class="tech-tag">SICK Ruler 3D</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">🔧</div><span class="project-badge">3D Vision</span></div>
+        <h3 class="project-title">Bolt Center Detection with Angle</h3>
+        <p class="project-desc">Detects bolt center positions and calculates precise orientation angle using 3D ruler data for automated assembly verification.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">SICK Ruler</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">🔍</div><span class="project-badge">2D Vision</span></div>
+        <h3 class="project-title">Crack Detection System</h3>
+        <p class="project-desc">Real-time surface crack detection pipeline using SICK PICO camera with preprocessing and anomaly classification for quality control.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">SICK PICO</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">🎯</div><span class="project-badge">Detection</span></div>
+        <h3 class="project-title">Tire Bulge Detection System</h3>
+        <p class="project-desc">Detects tire bulges using distance analysis, counts deformities, and classifies defect severity from 3D camera data.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">NumPy</span><span class="tech-tag">SICK Ruler</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">📝</div><span class="project-badge">OCR</span></div>
+        <h3 class="project-title">Metal Piece OCR Detection</h3>
+        <p class="project-desc">Extracts text and serial numbers from metal surfaces using an image preprocessing pipeline optimized for industrial lighting conditions.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">OCR</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">👁️</div><span class="project-badge green">Safety</span></div>
+        <h3 class="project-title">Person Detection System</h3>
+        <p class="project-desc">Real-time human detection for industrial safety monitoring — alerts when personnel enter restricted machine zones.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">SICK Camera</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">📦</div><span class="project-badge">Automation</span></div>
+        <h3 class="project-title">Palletization Concept System</h3>
+        <p class="project-desc">Object arrangement tracking and palletization automation for industrial logistics and warehouse environments.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">NumPy</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">📏</div><span class="project-badge">Measurement</span></div>
+        <h3 class="project-title">Tire Depth &amp; Angle Measurement</h3>
+        <p class="project-desc">Measures width, height, depth, and alignment angle of tires using 3D ruler data for high-accuracy quality control.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">SICK Ruler</span><span class="tech-tag">NumPy</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-top"><div class="project-icon">🔦</div><span class="project-badge">Inspection</span></div>
+        <h3 class="project-title">Matchstick Detection System</h3>
+        <p class="project-desc">Industrial quality inspection using SICK cameras to detect and count matchsticks for automated packaging validation.</p>
+        <div class="project-techs"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">SICK Camera</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-inner">
+    <div class="section-eyebrow">Experience</div>
+    <h2 class="section-heading">Where I've Worked</h2>
+    <div class="exp-wrapper reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-logo">ERL</div>
+          <div><div class="exp-company">ERL Sensors &amp; Automation</div><div class="exp-role">Python Full Stack Developer / Vision Engineer</div></div>
+          <div class="exp-date">Current</div>
+        </div>
+        <ul class="exp-points">
+          <li><div class="exp-dot"></div>Built real-time inspection systems using 2D &amp; 3D SICK cameras for live production lines</li>
+          <li><div class="exp-dot"></div>Developed industrial automation solutions with Python and OpenCV</li>
+          <li><div class="exp-dot"></div>Engineered depth measurement and defect detection pipelines for tire manufacturing</li>
+          <li><div class="exp-dot"></div>Designed full-stack dashboards for visualizing inspection data in real-time</li>
+          <li><div class="exp-dot"></div>Integrated REST APIs for factory floor data management and reporting</li>
+        </ul>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card"><div class="impact-num">↑40%</div><div class="impact-label"><strong>Inspection Accuracy</strong>Over manual benchmarks</div></div>
+        <div class="impact-card"><div class="impact-num">100%</div><div class="impact-label"><strong>Checks Automated</strong>Replaced by vision systems</div></div>
+        <div class="impact-card"><div class="impact-num">↓ 0</div><div class="impact-label"><strong>Measurement Error</strong>In deployed systems</div></div>
+        <div class="rare-box">
+          <div class="rare-box-title">Why this profile is rare</div>
+          <p>Most engineers never touch industrial hardware. Combining full-stack web development with machine vision and live production systems is a niche very few developers occupy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="section section-alt" id="achievements">
+  <div class="section-inner">
+    <div class="section-eyebrow">Recognition</div>
+    <h2 class="section-heading">Achievements &amp; Awards</h2>
+    <div class="ach-grid reveal">
+      <div class="ach-card"><div class="ach-icon">🥇</div><div><div class="ach-title">Best Employee Award</div><div class="ach-sub">Recognized at ERL Sensors and Automation for outstanding contribution to industrial vision systems and automation projects.</div></div></div>
+      <div class="ach-card"><div class="ach-icon">📜</div><div><div class="ach-title">SLA Python Certification</div><div class="ach-sub">Completed advanced Python programming certification — the foundation of all backend and computer vision work.</div></div></div>
+      <div class="ach-card"><div class="ach-icon">🏭</div><div><div class="ach-title">Production System Deployments</div><div class="ach-sub">Successfully deployed multiple real-time industrial vision systems running 24/7 on active manufacturing lines.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <div class="section-eyebrow">Contact</div>
+    <h2 class="section-heading">Let's Connect</h2>
+    <div class="contact-grid reveal">
+      <div>
+        <p class="contact-intro">Whether you're looking for a developer who can build both the web layer and the vision layer, or have an industrial automation challenge — I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:deepan.r.l20@gmail.com"><div class="contact-link-icon">📧</div><div><div class="contact-link-label">Email</div><div class="contact-link-val">deepan.r.l20@gmail.com</div></div></a>
+          <a class="contact-link" href="tel:+916369556911"><div class="contact-link-icon">📱</div><div><div class="contact-link-label">Phone</div><div class="contact-link-val">+91 6369556911</div></div></a>
+          <a class="contact-link" href="https://github.com/gididdeepan" target="_blank"><div class="contact-link-icon">💻</div><div><div class="contact-link-label">GitHub</div><div class="contact-link-val">github.com/gididdeepan</div></div></a>
+          <a class="contact-link" href="https://www.linkedin.com/in/deepan20" target="_blank"><div class="contact-link-icon">🔗</div><div><div class="contact-link-label">LinkedIn</div><div class="contact-link-val">linkedin.com/in/deepan20</div></div></a>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="John"></div>
+          <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Doe"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="john@company.com"></div>
+        <div class="form-group"><label class="form-label">Subject</label><input type="text" class="form-input" placeholder="Project Inquiry / Job Opportunity"></div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" placeholder="Tell me about your project or opportunity..."></textarea></div>
+        <button class="form-submit" onclick="handleSubmit(this)">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">R.L. Deepan</div>
+  <div class="footer-copy">© 2025 · Full Stack Developer &amp; Vision Engineer · Chennai, India</div>
+  <div class="footer-links">
+    <a href="https://github.com/gididdeepan" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/deepan20" target="_blank">LinkedIn</a>
+    <a href="mailto:deepan.r.l20@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 0.1 + 's';
+    io.observe(el);
+  });
+
+  document.querySelectorAll('.project-card:not(.reveal)').forEach((card, i) => {
+    card.classList.add('reveal');
+    card.style.transitionDelay = (i * 0.07) + 's';
+    io.observe(card);
+  });
+
+  // Contact form: this is a static site (no backend), so we open the
+  // visitor's email client with the message pre-filled instead of
+  // posting to a server.
+  function handleSubmit(btn) {
+    const firstName = document.querySelector('input[placeholder="John"]').value.trim();
+    const lastName  = document.querySelector('input[placeholder="Doe"]').value.trim();
+    const email     = document.querySelector('input[type="email"]').value.trim();
+    const subject   = document.querySelector('input[placeholder="Project Inquiry / Job Opportunity"]').value.trim();
+    const message   = document.querySelector('textarea').value.trim();
+
+    if (!firstName || !email || !message) {
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    const name = `${firstName} ${lastName}`.trim();
+    const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+    const mailto = `mailto:deepan.r.l20@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio Contact')}&body=${encodeURIComponent(body)}`;
+
+    btn.textContent = 'Opening email app...';
+    btn.style.opacity = '0.7';
+    window.location.href = mailto;
+
+    setTimeout(() => {
+      btn.textContent = '✓ Ready to send!';
+      btn.style.background = '#10b981';
+      btn.style.opacity = '1';
+      setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
+    }, 600);
+  }
+</script>
+</body>
+</html>
